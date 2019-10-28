@@ -45,7 +45,7 @@ MpiHad MI_HANDLER None; FRAGMENTATION Off;
   Process 93 93 -> 93 93;
   Order (*,0);
   CKKW sqr(20/E_CMS)
-  Integration_Error 2.2;
+  Integration_Error 0.05;
 
   End process;
 
@@ -60,7 +60,7 @@ pts = [15, 30, 50, 80, 120, 170, 300, 470, 600, 800, 1000, 1400, 1800, 2400, 320
 for pt1, pt2 in zip(pts, pts[1:]):
     runCardNow = runCard.replace('ptMin', str(pt1))
     runCardNow = runCardNow.replace('ptMax', str(pt2))
-    runCardHad = runCardNow.replace('MpiHad', '%')
+    runCardHad = runCardNow.replace('MpiHad', '#')
     runCardNoHad = runCardNow.replace('MpiHad', ' ')
     with open('sherpaFiles/Run.dat_QCD_pt'+str(pt1)+'_Had_LO_13TeV','w') as outFile:
         outFile.write(runCardHad)
