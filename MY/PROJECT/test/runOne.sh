@@ -15,7 +15,7 @@ fi
 ptVals=(15 30  50  80  120  170  300  470  600  800  1000  1400  1800  2400  3200)
 
 
-pt=15
+pt=80
 tag=Had
 
 
@@ -26,7 +26,7 @@ then
     analysis=$3
 
     tag=$1
-    pt=${ptVals[0]}
+    pt=${ptVals[$2]}
     echo $jobName  $prepid  $analysis  $nJobs  $nEv
 fi
 
@@ -37,3 +37,25 @@ mkdir -p sherpaFiles/$outDir
 
 
 ./MakeSherpaLibs.sh -i $PWD/sherpaFiles -p $outDir  -f $PWD/sherpaFiles/$outDir  -o LBCR -v -m mpirun -M '-n 4'
+
+#Produce sherpapack
+cd sherpaFiles/$outDir
+../../PrepareSherpaLibs.sh -p $outDir
+
+#cmsDriver.py MY/PROJECT/python/sherpa_${outDir}_MASTER_cff.py \
+#        -s GEN -n 1000 --no_exec --conditions auto:mc --eventcontent RAWSIM
+cp  sherpa_${outDir}_MASTER_cff.py  $CMSSW_BASE/src/MY/PROJECT/python
+cmsDriver.py MY/PROJECT/python/sherpa_${outDir}_MASTER_cff.py   -s GEN -n 1000 --no_exec --conditions auto:mc --eventcontent RAWSIM
+
+cat <<EOF >>  sherpa_${outDir}_MASTER_cff_py_GEN.py 
+def customise(process):
+    process.load('GeneratorInterface.RivetInterface.rivetAnalyzer_cfi')
+    process.rivetAnalyzer.AnalysisNames = cms.vstring('CMS_2016_I1459051')
+    process.rivetAnalyzer.OutputFile = cms.string('Rivet.yoda')
+    process.rivetAnalyzer.CrossSection = cms.double(1)
+    process.generation_step+=process.rivetAnalyzer
+    process.schedule.remove(process.RAWSIMoutput_step)
+    return(process)     
+process = customise(process)
+EOF
+
