@@ -33,7 +33,7 @@ fi
 outDir=QCD_pt${pt}_${tag}_LO_13TeV
 mkdir -p sherpaFiles/$outDir
 
-exit
+#exit
 
 
-./MakeSherpaLibs.sh -i $PWD/sherpaFiles -p $outDir  -f $PWD/sherpaFiles/$outDir  -o LBCR -v -m mpirun -M '-n 9'
+./MakeSherpaLibs.sh -i $PWD/sherpaFiles -p $outDir  -f $PWD/sherpaFiles/$outDir  -o LBCR -v -m mpirun -M '-n 4'
