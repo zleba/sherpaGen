@@ -21,14 +21,18 @@ tag=Had
 
 if [ "$#" -eq 2 ]
 then
-    jobName=$1
-    prepid=$2
-    analysis=$3
-
     tag=$1
     pt=${ptVals[$2]}
-    echo $jobName  $prepid  $analysis  $nJobs  $nEv
 fi
+
+if [ "$#" -eq 1 ]
+then
+    tag=$1
+    pt=Flat
+fi
+
+
+
 
 outDir=QCD_pt${pt}_${tag}_LO_13TeV
 mkdir -p sherpaFiles/$outDir

@@ -9,14 +9,14 @@
 #+PreCmd        = "tree"
 #+PreArguments  = "-o tree_before.$(Cluster).$(Process).txt"
 getenv              = True
-executable          = runOne.sh
-arguments           = "$(tag) $(Process)"
+executable          = runSherpa.sh
+arguments           = "$(tag)  $(pt)  $(nEv)  $(Process)"
 transfer_executable = False
 universe            = vanilla
 #input               = /nfs/dust/my/path/to/data/mypayload.data
-output              = farm/logs/$(tag)_New_$(Process).out
-error               = farm/logs/$(tag)_New_$(Process).err
-log                 = farm/logs/$(tag)_New_$(Process).log
+output              = sherpaProduction/pt$(pt)_$(tag)/logs/$(Process).out
+error               = sherpaProduction/pt$(pt)_$(tag)/logs/$(Process).err
+log                 = sherpaProduction/pt$(pt)_$(tag)/logs/$(Process).log
 #_$(Cluster)_$(Process) gets substituted by cluster and process ID, putting it in the output files leads to individual files
 #for each job. Remember that regular filesystem rules about maximum files in a directory and maximum filesizes apply (warning)
 #htcondor will (as any other batchsystem) not create any directories for you, hence these need to exist.
@@ -33,14 +33,14 @@ log                 = farm/logs/$(tag)_New_$(Process).log
 # default is 1536M and jobs requesting > 2048 get more hit in the fairshare calculation
 #
 #RequestMemory = 1024
-request_cpus = 4
+request_cpus = 1
 #
 # max run time in seconds for a job, after it gets killed by the system
 # if not set, default is 3 hours
 # longer requested job run times get more hit in the fairshare calculation
 #
-+RequestRuntime     = 1728000
++RequestRuntime     = 8000
 #
 #
 ##########################
-queue 15
+queue $(nJobs)
