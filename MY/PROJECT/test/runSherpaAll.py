@@ -10,7 +10,7 @@ for pt in ptVals:
         os.mkdir('sherpaProduction/'+n)
         os.mkdir('sherpaProduction/'+n+'/logs')
 
-        nEv = 10000
+        nEv = 30000
         nJobs = 20
 
         #condor_submit -batch-name SherpaHad   tag=Had   runRivet.submit
