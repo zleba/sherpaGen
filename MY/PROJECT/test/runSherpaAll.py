@@ -10,8 +10,8 @@ for pt in ptVals:
         os.mkdir('sherpaProduction/'+n)
         os.mkdir('sherpaProduction/'+n+'/logs')
 
-        nEv = 30000
-        nJobs = 20
+        nEv = 120000
+        nJobs = 120
 
         #condor_submit -batch-name SherpaHad   tag=Had   runRivet.submit
         import subprocess
